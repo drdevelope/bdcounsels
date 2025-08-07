@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Header from "./components/new-commit/Header";
 import Sidebar from "./components/Sidebar";
+import StateTabs from "./components/StateTabs";
 import MainContent from "./components/MainContent";
 import NeetUGPage from "./pages/NeetUGPage";
 import NeetPGPage from "./pages/NeetPGPage";
-import INICETPage from "./pages/INICETPage";
 import AllotmentsPage from "./pages/AllotmentsPage";
 import ClosingRanksPage from "./pages/ClosingRanksPage";
 import SeatMatrixPage from "./pages/SeatMatrixPage";
@@ -20,22 +20,21 @@ import ResultrankingPage from "./components/Resultrankingpage";
 import CounsellingPage from "./components/Counsellingpage";
 import AIAssistant from "./components/AIAssistant";
 import WhatsAppSupport from "./components/WhatsAppSupport";
+import { AuthProvider } from "./contexts/AuthContext";
 
 /**
- * NEW COMMIT: Updated App Component with Enhanced Navigation
- * Added NEET page routing and improved structure
+ * Enhanced App Component with Complete Navigation and Mandatory Sidebar
+ * Updated with proper routing for all data pages and predictor tools
  */
 function App() {
-  const [activeSection, setActiveSection] = useState("home"); // Current dashboard section/page
-  const [currentNeetPage, setCurrentNeetPage] = useState<string | null>(null); // NEET page state
-  const [activeTab] = useState("all-india"); // StateTabs (if used)
-  const [setSearchValue] = useState(""); // Search input value
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile sidebar
-  const [showPlaceholder, setShowPlaceholder] = useState(false); // Placeholder for unknown sections
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // Sidebar collapse
+  const [activeSection, setActiveSection] = useState("home");
+  const [currentNeetPage, setCurrentNeetPage] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("all-india");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showPlaceholder, setShowPlaceholder] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   // Demo user
-  // const [isLoggedIn] = useState(true);
   const [user] = useState({
     name: "Madhav Deshmukh",
     email: "madhav.deshmukh@gmail.com",
@@ -46,15 +45,13 @@ function App() {
     avatar: "MD",
   });
 
-  // Search input change
-  const handleSearchChange = (value: string) => setSearchValue(value);
+  const handleSearchChange = (value: string) => {
+    console.log("Search:", value);
+  };
 
-  // Section navigation (dashboard, profile, support, etc.)
   const handleSectionChange = (section: string) => {
-    // Show placeholder for unknown sections
+    // Handle data pages
     if (
-      section === "results" ||
-      section === "Counselling" ||
       section === "allotments" ||
       section === "closing-ranks" ||
       section === "seat-matrix" ||
@@ -63,28 +60,15 @@ function App() {
       section === "support" ||
       section === "faq" ||
       section === "universities" ||
-      section === "home"
+      section === "results" ||
+      section === "Counselling" ||
+      section === "home" ||
+      section === "neet-ug-predictor" ||
+      section === "neet-pg-predictor"
     ) {
       setShowPlaceholder(false);
-      setCurrentNeetPage(null); // Reset NEET page when navigating to other sections
-    } else if (section === "results") {
-      setActiveSection("results");
-      setShowPlaceholder(false);
+      setCurrentNeetPage(null);
     } else {
-      // NEW COMMIT: Handle data page navigation
-      if (
-        section === "allotments" ||
-        section === "closing-ranks" ||
-        section === "seat-matrix" ||
-        section === "fee-stipend-bond"
-      ) {
-        setActiveSection(section);
-        setShowPlaceholder(false);
-        setCurrentNeetPage(null);
-        setIsMobileMenuOpen(false);
-        return;
-      }
-
       setShowPlaceholder(true);
       setCurrentNeetPage(null);
     }
@@ -92,7 +76,6 @@ function App() {
     setIsMobileMenuOpen(false);
   };
 
-  // NEW COMMIT: NEET Navigation Handler
   const handleNeetNavigation = (page: string) => {
     setCurrentNeetPage(page);
     setActiveSection("neet");
@@ -100,20 +83,16 @@ function App() {
     setIsMobileMenuOpen(false);
   };
 
-  // Back to dashboard/home
   const handleBackToDashboard = () => {
     setShowPlaceholder(false);
     setCurrentNeetPage(null);
     setActiveSection("home");
   };
 
-  // Sidebar collapse toggle
   const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed);
 
   /**
-   * NEW COMMIT: Enhanced Content Rendering with NEET Pages
-   * Renders the main content area based on the active section.
-   * Handles dashboard, NEET pages, profile, support, FAQ, universities, and placeholder pages.
+   * Enhanced Content Rendering with All Pages
    */
   const renderPageContent = () => {
     // NEET Pages
@@ -123,24 +102,12 @@ function App() {
           return <NeetUGPage />;
         case "neet-pg":
           return <NeetPGPage />;
-        case "inicet":
-          return <INICETPage />;
         default:
           return <NeetUGPage />;
       }
     }
 
-    // Results and Rankings page
-    if (activeSection === "results") {
-      return <ResultrankingPage onBack={handleBackToDashboard} />;
-    }
-
-    // Counselling page
-    if (activeSection === "Counselling" || activeSection === "Counselling") {
-      return <CounsellingPage onBack={handleBackToDashboard} />;
-    }
-
-    // NEW COMMIT: Data pages
+    // Data pages
     if (activeSection === "allotments") {
       return <AllotmentsPage onBack={handleBackToDashboard} />;
     }
@@ -157,7 +124,15 @@ function App() {
       return <FeeStipendBondPage onBack={handleBackToDashboard} />;
     }
 
-    // Profile page
+    // Other pages
+    if (activeSection === "results") {
+      return <ResultrankingPage onBack={handleBackToDashboard} />;
+    }
+
+    if (activeSection === "Counselling") {
+      return <CounsellingPage onBack={handleBackToDashboard} />;
+    }
+
     if (activeSection === "profile") {
       return (
         <ProfilePage
@@ -168,19 +143,26 @@ function App() {
       );
     }
 
-    // Support page
     if (activeSection === "support") {
       return <SupportPage onBack={handleBackToDashboard} />;
     }
 
-    // FAQ page
     if (activeSection === "faq") {
       return <FAQPage onBack={handleBackToDashboard} />;
     }
 
-    // Universities page
     if (activeSection === "universities") {
       return <UniversitiesPage onBack={handleBackToDashboard} />;
+    }
+
+    // Predictor pages
+    if (activeSection === "neet-ug-predictor" || activeSection === "neet-pg-predictor") {
+      return (
+        <PlaceholderContent
+          title={`${activeSection === "neet-ug-predictor" ? "NEET UG" : "NEET PG"} Predictor`}
+          onBack={handleBackToDashboard}
+        />
+      );
     }
 
     // Placeholder for unknown sections
@@ -198,7 +180,6 @@ function App() {
     // Main dashboard content
     return (
       <div className="min-h-screen bg-gradient-to-br from-rose-50 via-blue-50 to-indigo-50">
-        {/* NEW COMMIT: Updated Header with NEET Navigation */}
         <Header
           onSearchChange={handleSearchChange}
           onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -208,7 +189,12 @@ function App() {
           onNeetNavigation={handleNeetNavigation}
         />
 
-        {/* Main layout with sidebar and content */}
+        {/* State Tabs - Visible on Dashboard */}
+        <StateTabs
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+
         <div className="flex relative">
           {/* Mobile Sidebar Overlay */}
           {isMobileMenuOpen && (
@@ -248,7 +234,7 @@ function App() {
           onToggleCollapse={toggleSidebar}
         />
 
-        {/* Choice Lists (Right sidebar or floating) */}
+        {/* Choice Lists (Right sidebar) */}
         <ChoiceLists />
 
         {/* Mobile Bottom Navigation */}
@@ -269,25 +255,10 @@ function App() {
     );
   };
 
-  // For profile, support, FAQ, universities, or placeholder pages,
-  // render with dashboard navigation (header/sidebar)
-  if (
-    currentNeetPage ||
-    activeSection === "results" ||
-    activeSection === "allotments" ||
-    activeSection === "closing-ranks" ||
-    activeSection === "seat-matrix" ||
-    activeSection === "fee-stipend-bond" ||
-    activeSection === "Counselling" ||
-    activeSection === "profile" ||
-    activeSection === "support" ||
-    activeSection === "faq" ||
-    activeSection === "universities" ||
-    showPlaceholder
-  ) {
-    return (
+  // For all other pages, render with mandatory sidebar
+  return (
+    <AuthProvider>
       <div className="min-h-screen bg-gradient-to-br from-rose-50 via-blue-50 to-indigo-50">
-        {/* NEW COMMIT: Updated Header with NEET Navigation */}
         <Header
           onSearchChange={handleSearchChange}
           onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -297,7 +268,14 @@ function App() {
           onNeetNavigation={handleNeetNavigation}
         />
 
-        {/* Main layout with sidebar and content */}
+        {/* State Tabs - Only show on dashboard */}
+        {activeSection === "home" && (
+          <StateTabs
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
+        )}
+
         <div className="flex relative">
           {/* Mobile Sidebar Overlay */}
           {isMobileMenuOpen && (
@@ -318,14 +296,22 @@ function App() {
 
           {/* Page Content */}
           <div
-            className="flex-1"
-            style={{ marginLeft: isSidebarCollapsed ? "64px" : "256px" }}
+            className={`flex-1 ${
+              activeSection === "home" 
+                ? ""
+                : ""
+            }`}
+            style={{ 
+              marginLeft: activeSection === "home" 
+                ? (isSidebarCollapsed ? "64px" : "256px") 
+                : "0px" 
+            }}
           >
             {renderPageContent()}
           </div>
         </div>
 
-        {/* Fixed Sidebar (Desktop) */}
+        {/* Mandatory Sidebar for All Sections */}
         <Sidebar
           activeSection={activeSection}
           onSectionChange={handleSectionChange}
@@ -333,6 +319,9 @@ function App() {
           isCollapsed={isSidebarCollapsed}
           onToggleCollapse={toggleSidebar}
         />
+
+        {/* Choice Lists - Only show on dashboard */}
+        {activeSection === "home" && <ChoiceLists />}
 
         {/* Mobile Bottom Navigation */}
         <MobileBottomNav
@@ -349,11 +338,8 @@ function App() {
         {/* Padding for mobile bottom nav */}
         <div className="lg:hidden h-20"></div>
       </div>
-    );
-  }
-
-  // Default: render main dashboard content
-  return renderPageContent();
+    </AuthProvider>
+  );
 }
 
 export default App;

@@ -9,11 +9,17 @@ import {
   Award,
   PanelLeftClose,
   PanelLeftOpen,
+  BarChart3,
+  Users,
+  DollarSign,
+  TrendingUp,
+  Building2,
+  Target,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+
 /**
- * Sidebar Component Props Interface
- * Defines the props required for the Sidebar component
+ * Enhanced Sidebar Component with Mandatory Sidebar for All Sections
+ * Updated with proper routing and explore dropdown functionality
  */
 interface SidebarProps {
   activeSection: string;
@@ -23,11 +29,6 @@ interface SidebarProps {
   onToggleCollapse?: () => void;
 }
 
-/**
- * Sidebar Component
- * Navigation sidebar with collapsible sections and menu items
- * Supports both collapsed and expanded states
- */
 const Sidebar: React.FC<SidebarProps> = ({
   activeSection,
   onSectionChange,
@@ -35,18 +36,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   isCollapsed = false,
   onToggleCollapse,
 }) => {
-  // State for managing expanded menu sections
   const [expandedSections, setExpandedSections] = useState<string[]>([
-    "repo",
     "tools",
     "explore",
+    "data",
   ]);
-  const navigate = useNavigate();
 
-  /**
-   * Toggle expansion state of menu sections
-   * @param section - Section identifier to toggle
-   */
   const toggleSection = (section: string) => {
     if (!isCollapsed) {
       setExpandedSections((prev) =>
@@ -57,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   };
 
-  // Menu items configuration with icons, labels, and submenu items
+  // Enhanced menu items with proper routing
   const menuItems = [
     {
       id: "home",
@@ -66,7 +61,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       hasSubmenu: false,
       color: "text-blue-600",
     },
-
     {
       id: "universities",
       icon: GraduationCap,
@@ -87,7 +81,19 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: "Results & Rankings",
       hasSubmenu: false,
       color: "text-emerald-600",
-      onClick: () => navigate("/resultranking"),
+    },
+    {
+      id: "data",
+      icon: BarChart3,
+      label: "Data",
+      hasSubmenu: true,
+      color: "text-indigo-600",
+      submenu: [
+        { id: "allotments", label: "Allotments", icon: Users },
+        { id: "closing-ranks", label: "Closing Ranks", icon: TrendingUp },
+        { id: "seat-matrix", label: "Seat Matrix", icon: BarChart3 },
+        { id: "fee-stipend-bond", label: "Fee, Stipend & Bond", icon: DollarSign },
+      ],
     },
     {
       id: "explore",
@@ -96,10 +102,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       hasSubmenu: true,
       color: "text-orange-600",
       submenu: [
-        "Medical Courses",
-        "Top Colleges",
-        "Entrance Exams",
-        "Career Paths",
+        { id: "medical-courses", label: "Medical Courses", icon: GraduationCap },
+        { id: "top-colleges", label: "Top Colleges", icon: Award },
+        { id: "government-colleges", label: "Government Colleges", icon: Building2 },
+        { id: "private-colleges", label: "Private Colleges", icon: Building2 },
       ],
     },
     {
@@ -109,10 +115,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       hasSubmenu: true,
       color: "text-purple-600",
       submenu: [
-        "NEET UG Predictor",
-        "NEET PG Predictor",
-        "Cut-off Analysis",
-        "Rank Analysis",
+        { id: "neet-ug-predictor", label: "NEET UG Predictor", icon: Target },
+        { id: "neet-pg-predictor", label: "NEET PG Predictor", icon: Target },
+        { id: "cutoff-analysis", label: "Cut-off Analysis", icon: BarChart3 },
+        { id: "rank-analysis", label: "Rank Analysis", icon: TrendingUp },
       ],
     },
   ];
@@ -147,9 +153,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               {/* Main menu item button */}
               <button
                 onClick={() => {
-                  if (item.onClick) {
-                    item.onClick();
-                  } else if (item.hasSubmenu && !isCollapsed) {
+                  if (item.hasSubmenu && !isCollapsed) {
                     toggleSection(item.id);
                   } else {
                     onSectionChange(item.id);
@@ -196,20 +200,16 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <div className="ml-6 mt-2 space-y-1 animate-in slide-in-from-top-2">
                     {item.submenu?.map((subItem) => (
                       <button
-                        key={subItem}
-                        onClick={() =>
-                          onSectionChange(
-                            `${item.id}-${subItem
-                              .toLowerCase()
-                              .replace(/\s+/g, "-")}`
-                          )
-                        }
-                        className="w-full text-left px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-800 rounded-lg transition-all duration-200 hover:translate-x-1"
+                        key={subItem.id}
+                        onClick={() => onSectionChange(subItem.id)}
+                        className={`w-full text-left px-4 py-2.5 text-sm rounded-lg transition-all duration-200 hover:translate-x-1 flex items-center space-x-2 ${
+                          activeSection === subItem.id
+                            ? "bg-blue-50 text-blue-700 border border-blue-200"
+                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-800"
+                        }`}
                       >
-                        <div className="flex items-center space-x-2">
-                          <div className="w-1.5 h-1.5 bg-slate-400 rounded-full"></div>
-                          <span>{subItem}</span>
-                        </div>
+                        <subItem.icon className="w-4 h-4" />
+                        <span>{subItem.label}</span>
                       </button>
                     ))}
                   </div>

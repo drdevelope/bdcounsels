@@ -9,12 +9,12 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Target,
 } from "lucide-react";
 
 /**
- * NEW COMMIT: Updated Header Component with NEET Dropdown Navigation
- * Added dropdown functionality for NEET UG, NEET PG, and INICET
- * Integrated with React Router for navigation
+ * Enhanced Header Component with NEET Predictor Navigation
+ * Updated dropdown functionality for NEET UG and NEET PG predictors
  */
 interface HeaderProps {
   onSearchChange: (value: string) => void;
@@ -22,7 +22,7 @@ interface HeaderProps {
   isMobileMenuOpen: boolean;
   user?: any;
   onSectionChange: (section: string) => void;
-  onNeetNavigation: (page: string) => void; // New prop for NEET navigation
+  onNeetNavigation: (page: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -46,15 +46,16 @@ const Header: React.FC<HeaderProps> = ({
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  // NEET dropdown options
+  // NEET dropdown options (removed INICET as requested)
   const neetOptions = [
     { id: "neet-ug", label: "NEET UG", description: "Undergraduate Medical" },
     { id: "neet-pg", label: "NEET PG", description: "Postgraduate Medical" },
-    {
-      id: "inicet",
-      label: "INICET",
-      description: "Institute of National Importance",
-    },
+  ];
+
+  // Predictor dropdown options
+  const predictorOptions = [
+    { id: "neet-ug-predictor", label: "NEET UG Predictor", description: "College admission predictor" },
+    { id: "neet-pg-predictor", label: "NEET PG Predictor", description: "Specialty admission predictor" },
   ];
 
   return (
@@ -124,13 +125,13 @@ const Header: React.FC<HeaderProps> = ({
             </div>
 
             <div className="flex items-center space-x-6">
-              {/* NEW COMMIT: Enhanced NEET Dropdown */}
+              {/* NEET Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => toggleDropdown("neet")}
                   className="flex items-center space-x-2 px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
                 >
-                  <span>NEET UG</span>
+                  <span>NEET</span>
                   <ChevronDown className="w-4 h-4" />
                 </button>
                 {activeDropdown === "neet" && (
@@ -140,6 +141,39 @@ const Header: React.FC<HeaderProps> = ({
                         key={option.id}
                         onClick={() => {
                           onNeetNavigation(option.id);
+                          setActiveDropdown(null);
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-slate-50 transition-colors"
+                      >
+                        <div className="font-medium text-slate-800">
+                          {option.label}
+                        </div>
+                        <div className="text-sm text-slate-600">
+                          {option.description}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Predictor Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown("predictor")}
+                  className="flex items-center space-x-2 px-4 py-2 text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200 font-medium"
+                >
+                  <Target className="w-4 h-4" />
+                  <span>Predictor</span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+                {activeDropdown === "predictor" && (
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-xl rounded-xl shadow-xl border border-slate-200/50 py-2 z-50 animate-in slide-in-from-top-2">
+                    {predictorOptions.map((option) => (
+                      <button
+                        key={option.id}
+                        onClick={() => {
+                          onSectionChange(option.id);
                           setActiveDropdown(null);
                         }}
                         className="w-full text-left px-4 py-3 hover:bg-slate-50 transition-colors"
@@ -257,7 +291,7 @@ const Header: React.FC<HeaderProps> = ({
             placeholder="Search courses, colleges..."
             value={searchValue}
             onChange={handleSearch}
-            className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-50/50 transition-all duration-200"
+            className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-50/50 transition-all duration-200 text-sm"
           />
         </div>
       </div>
