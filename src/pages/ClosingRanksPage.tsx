@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  ArrowLeft,
-  TrendingUp,
-  Search,
-  Filter,
-  X,
-  ChevronDown,
-  Sort,
-  Heart,
-} from "lucide-react";
+import { ArrowLeft, TrendingUp, Search, Filter, X, ChevronDown, SortAsc as Sort, Heart } from "lucide-react";
 import { closingRanksAPI } from "../services/api";
 
 interface ClosingRanksPageProps {

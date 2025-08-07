@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  ArrowLeft,
-  Users,
-  Search,
-  Filter,
-  X,
-  ChevronDown,
-  Sort,
-  Heart,
-  MoreHorizontal,
-  Download,
-  Eye,
-} from "lucide-react";
+import { ArrowLeft, Users, Search, Filter, X, ChevronDown, SortAsc as Sort, Heart, MoreHorizontal, Download, Eye } from "lucide-react";
 import { allotmentsAPI } from "../services/api";
 
 interface AllotmentsPageProps {
