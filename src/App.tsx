@@ -11,10 +11,10 @@ import SignupPage from "./pages/SignupPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardProfilePage from "./pages/DashboardProfilePage";
 
-// NEET Pages
-import NeetUGPage from "./pages/NeetUGPage";
+// NEET PG Pages (UG commented for NEET PG focus)
+// import NeetUGPage from "./pages/NeetUGPage"; // Commented for NEET PG focus
 import NeetPGPage from "./pages/NeetPGPage";
-import INICETPage from "./pages/INICETPage";
+// import INICETPage from "./pages/INICETPage"; // Hidden as requested
 import Homepage from "./pages/Homepage";
 
 // Data Pages
@@ -23,7 +23,6 @@ import ClosingRanksPage from "./pages/ClosingRanksPage";
 import SeatMatrixPage from "./pages/SeatMatrixPage";
 import FeeStipendBondPage from "./pages/FeeStipendBondPage";
 import StateTabs from "./components/StateTabs";
-// import StateCounsellingPage from "./pages/StateCounsellingPage";
 
 // Component Pages
 import FAQPage from "./components/FAQPage";
@@ -33,13 +32,17 @@ import MedicalCollegesPage from "./components/MedicalCollegesPage";
 import ResultrankingPage from "./components/Resultrankingpage";
 import CounsellingPage from "./components/Counsellingpage";
 
-// Predictor Pages
-import UGPredictorPage from "./pages/UGPredictorPage";
+// New Pages
+import ChoiceListsPage from "./pages/ChoiceListsPage";
+import LatestNewsPage from "./pages/LatestNewsPage";
+
+// Predictor Pages (UG commented for NEET PG focus)
+// import UGPredictorPage from "./pages/UGPredictorPage"; // Commented for NEET PG focus
 import PGPredictorPage from "./pages/PGPredictorPage";
 
 /**
  * Main App Component with React Router
- * Restructured with proper authentication flow and navigation
+ * Restructured for NEET PG focus with proper authentication flow and navigation
  * All routes are properly organized with API integration comments
  */
 function App() {
@@ -69,32 +72,27 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/Statetabs"
-            element={
-              <ProtectedRoute>
-                <StateTabs />
-              </ProtectedRoute>
-            }
-          />
-          {/* <Route
-          path="/statetabs"
-          element={
-            <ProtectedRoute>
-             <StateCounsellingPage />
-             </ProtectedRoute>
-             }
-          /> */}
 
-          {/* NEET Exam Routes - API Integration: /api/neet/ */}
+          {/* Choice Lists and News Pages */}
           <Route
-            path="/neet-ug"
+            path="/choice-lists"
             element={
               <ProtectedRoute>
-                <NeetUGPage />
+                <ChoiceListsPage onBack={() => window.history.back()} />
               </ProtectedRoute>
             }
           />
+          
+          <Route
+            path="/latest-news"
+            element={
+              <ProtectedRoute>
+                <LatestNewsPage onBack={() => window.history.back()} />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* NEET PG Exam Routes - API Integration: /api/neet/ */}
           <Route
             path="/neet-pg"
             element={
@@ -103,24 +101,28 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          
+          {/* UG Routes commented for NEET PG focus */}
+          {/* <Route
+            path="/neet-ug"
+            element={
+              <ProtectedRoute>
+                <NeetUGPage />
+              </ProtectedRoute>
+            }
+          /> */}
+          
+          {/* INICET hidden as requested */}
+          {/* <Route
             path="/inicet"
             element={
               <ProtectedRoute>
                 <INICETPage />
               </ProtectedRoute>
             }
-          />
+          /> */}
 
           {/* Predictor Routes - API Integration: /api/predictor/ */}
-          <Route
-            path="/predictor/ug"
-            element={
-              <ProtectedRoute>
-                <UGPredictorPage />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/predictor/pg"
             element={
@@ -129,6 +131,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+          
+          {/* UG Predictor commented for NEET PG focus */}
+          {/* <Route
+            path="/predictor/ug"
+            element={
+              <ProtectedRoute>
+                <UGPredictorPage />
+              </ProtectedRoute>
+            }
+          /> */}
 
           {/* Data Pages Routes - API Integration: /api/neet/ */}
           <Route

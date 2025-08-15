@@ -6,6 +6,11 @@ import {
   User,
   HelpCircle,
   Menu,
+  Users,
+  BarChart3,
+  DollarSign,
+  TrendingUp,
+  ChevronUp,
 } from "lucide-react";
 
 interface MobileBottomNavProps {
@@ -14,17 +19,17 @@ interface MobileBottomNavProps {
 }
 
 /**
- * Mobile Bottom Navigation Component
- * UPDATED: Navigation items now match desktop sidebar
- * Improved responsiveness and visual design
+ * Enhanced Mobile Bottom Navigation Component
+ * Features expandable submenu for NEET PG data sections
  */
 const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   activeSection,
   onSectionChange,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [exploreOpen, setExploreOpen] = useState(false);
 
-  // Updated navigation items to match desktop sidebar
+  // Main navigation items
   const navItems = [
     { id: "home", icon: Home, label: "Dashboard" },
     { id: "universities", icon: GraduationCap, label: "Universities" },
@@ -33,12 +38,44 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
     { id: "profile", icon: User, label: "Profile" },
   ];
 
+  // Explore submenu items for NEET PG data
+  const exploreItems = [
+    {
+      id: "allotments",
+      icon: Users,
+      label: "Allotments",
+      description: "NEET PG Seat Allotments",
+      onClick: () => window.location.href = "/allotments",
+    },
+    {
+      id: "closing-ranks",
+      icon: TrendingUp,
+      label: "Closing Ranks",
+      description: "Previous Year Cutoffs",
+      onClick: () => window.location.href = "/closing-ranks",
+    },
+    {
+      id: "seat-matrix",
+      icon: BarChart3,
+      label: "Seat Matrix",
+      description: "Available Seats Data",
+      onClick: () => window.location.href = "/seat-matrix",
+    },
+    {
+      id: "fee-stipend-bond",
+      icon: DollarSign,
+      label: "Fee, Stipend & Bond",
+      description: "Financial Information",
+      onClick: () => window.location.href = "/fee-stipend-bond",
+    },
+  ];
+
   // Additional menu items for the drawer
   const menuItems = [
     {
-      id: "Counselling",
+      id: "counselling",
       label: "Counselling",
-      description: "NEET Counselling Process",
+      description: "NEET PG Counselling Process",
     },
     { id: "support", label: "Support", description: "Get Help & Assistance" },
     {
@@ -55,6 +92,46 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
 
   return (
     <>
+      {/* Explore Submenu Overlay */}
+      {exploreOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 lg:hidden">
+          <div className="fixed bottom-20 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/50 rounded-t-2xl shadow-2xl">
+            <div className="p-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-slate-800">Explore NEET PG Data</h3>
+                <button
+                  onClick={() => setExploreOpen(false)}
+                  className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
+                >
+                  <ChevronUp className="w-5 h-5 text-slate-600" />
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                {exploreItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      item.onClick();
+                      setExploreOpen(false);
+                    }}
+                    className="p-4 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors text-left"
+                  >
+                    <div className="flex items-center space-x-3 mb-2">
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <item.icon className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <span className="font-medium text-slate-800">{item.label}</span>
+                    </div>
+                    <p className="text-xs text-slate-600">{item.description}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Fixed Bottom Navbar */}
       <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-200/50 px-2 py-2 z-40 shadow-lg pointer-events-auto">
         <div className="flex items-center justify-around">
@@ -72,6 +149,17 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
               <span className="text-xs font-medium">{item.label}</span>
             </button>
           ))}
+          
+          {/* Explore Button with Submenu */}
+          <button
+            onClick={() => setExploreOpen(true)}
+            className="flex flex-col items-center justify-center w-14 h-12 rounded-xl text-slate-600 hover:text-slate-800 hover:bg-slate-50 transition-all duration-200"
+            aria-label="Explore NEET PG Data"
+          >
+            <Compass className="w-5 h-5 mb-1" />
+            <span className="text-xs font-medium">Explore</span>
+          </button>
+          
           {/* Menu Button */}
           <button
             onClick={() => setMenuOpen(true)}

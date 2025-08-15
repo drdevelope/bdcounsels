@@ -23,7 +23,7 @@ import NeetComparison from "./NeetComparison";
 import QuotaModal from "./QuotaModal";
 import StateTabsPG from './StateTabsPG';
 
-
+import RightSidebar from "./RightSidebar";
 
 /**
  * MainContent Component Props Interface
@@ -46,6 +46,8 @@ interface MainContentProps {
  */
 const MainContent: React.FC<MainContentProps> = ({ activeTab, dashboardData }) => {
 const [showQuotaModal, setShowQuotaModal] = useState(false);
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+
   // Action buttons configuration for the hero section
   const actionButtons = [
     {
@@ -231,7 +233,6 @@ const [showQuotaModal, setShowQuotaModal] = useState(false);
       {/* Mobile-First Hero Section */}
       {/* State Tabs Section */}
 
-
       <div className="bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 px-4 lg:px-6 py-6 lg:py-12 relative overflow-">
         <div className="absolute inset-0 bg-black/5"></div>
         <div className="relative max-w-7xl mx-auto">
@@ -242,9 +243,9 @@ const [showQuotaModal, setShowQuotaModal] = useState(false);
             </div>
             
             <h1 className="text-xl font-bold text-white mb-2">
-              All India Counselling - PG Medical
+              NEET PG Medical Counselling 2025
             </h1>
-            <p className="text-orange-100 mb-6 text-sm">Central • All India</p>
+            <p className="text-orange-100 mb-6 text-sm">Central • All India • NEET PG</p>
 
             <div className="grid grid-cols-2 gap-3 mb-6">
               {actionButtons.map((button) => (
@@ -278,7 +279,7 @@ const [showQuotaModal, setShowQuotaModal] = useState(false);
           <div className="hidden xl:block text-center">
             <div className="inline-flex items-center space-x-3 mb-6">
               <h1 className="text-3xl lg:text-4xl font-bold text-white">
-                NEET PG Medical Counselling 2025
+                NEET PG Medical Counselling 2025 - Postgraduate
               </h1>
               <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
                 <span className="text-white text-lg">⚡</span>
@@ -286,7 +287,7 @@ const [showQuotaModal, setShowQuotaModal] = useState(false);
             </div>
 
             <p className="text-orange-100 mb-8 text-lg">
-              Central • All India • Government Medical Colleges
+              Central • All India • NEET PG Government Medical Colleges
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">

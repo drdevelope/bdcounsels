@@ -8,8 +8,13 @@ import {
   Award,
   PanelLeftClose,
   PanelLeftOpen,
+  Users,
+  BarChart3,
+  DollarSign,
+  TrendingUp,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
 /**
  * Sidebar Component Props Interface
  * Defines the props required for the Sidebar component
@@ -23,7 +28,7 @@ interface SidebarProps {
 }
 
 /**
- * Sidebar Component
+ * Enhanced Sidebar Component for NEET PG Platform
  * Navigation sidebar with collapsible sections and menu items
  * Supports both collapsed and expanded states
  */
@@ -36,8 +41,6 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   // State for managing expanded menu sections
   const [expandedSections, setExpandedSections] = useState<string[]>([
-    "repo",
-    "tools",
     "explore",
   ]);
   const navigate = useNavigate();
@@ -101,24 +104,28 @@ const Sidebar: React.FC<SidebarProps> = ({
     {
       id: "explore",
       icon: Compass,
-      label: "Explore",
+      label: "Explore NEET PG Data",
       hasSubmenu: true,
       color: "text-orange-600",
       submenu: [
         {
           label: "Allotments",
+          icon: Users,
           onClick: () => navigate("/allotments"),
         },
         {
           label: "Closing Ranks",
+          icon: TrendingUp,
           onClick: () => navigate("/closing-ranks"),
         },
         {
           label: "Seat Matrix",
+          icon: BarChart3,
           onClick: () => navigate("/seat-matrix"),
         },
         {
-          label: "Fee, Stiphend & Bond",
+          label: "Fee, Stipend & Bond",
+          icon: DollarSign,
           onClick: () => navigate("/fee-stipend-bond"),
         },
       ],
@@ -199,26 +206,24 @@ const Sidebar: React.FC<SidebarProps> = ({
 
               {/* Submenu items */}
               {item.hasSubmenu &&
-  expandedSections.includes(item.id) &&
-  !isCollapsed && (
-    <div className="ml-6 mt-2 space-y-1 animate-in slide-in-from-top-2">
-      {item.submenu?.map((subItem) => (
-        <button
-          key={subItem.label}
-          onClick={() => {
-            onSectionChange(`${item.id}-${subItem.label.toLowerCase()}`);
-            subItem.onClick?.(); // <--- FIXED
-          }}
-          className="w-full text-left px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-800 rounded-lg transition-all duration-200 hover:translate-x-1"
-        >
-          <div className="flex items-center space-x-2">
-            <div className="w-1.5 h-1.5 bg-slate-400 rounded-full"></div>
-            <span>{subItem.label}</span>
-          </div>
-        </button>
-      ))}
-    </div>
-)}
+                expandedSections.includes(item.id) &&
+                !isCollapsed && (
+                  <div className="ml-6 mt-2 space-y-1 animate-in slide-in-from-top-2">
+                    {item.submenu?.map((subItem) => (
+                      <button
+                        key={subItem.label}
+                        onClick={() => {
+                          onSectionChange(`${item.id}-${subItem.label.toLowerCase()}`);
+                          subItem.onClick?.();
+                        }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-800 rounded-lg transition-all duration-200 hover:translate-x-1 flex items-center space-x-2"
+                      >
+                        <subItem.icon className="w-4 h-4" />
+                        <span>{subItem.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
             </div>
           ))}
         </nav>

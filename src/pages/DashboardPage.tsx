@@ -3,15 +3,16 @@ import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import MainContent from "../components/MainContent";
-import ChoiceLists from "../components/ChoiceLists";
+import RightSidebar from "../components/RightSidebar";
 import MobileBottomNav from "../components/MobileBottomNav";
 import AIAssistant from "../components/AIAssistant";
 import WhatsAppSupport from "../components/WhatsAppSupport";
+import StateTabs from "../components/StateTabs";
 import { neetAPI, counsellingAPI } from "../services/api";
 
 /**
- * Dashboard Page Component
- * Main dashboard with sidebar navigation and content area
+ * Enhanced Dashboard Page Component for NEET PG Platform
+ * Main dashboard with sidebar navigation, right sidebar, and content area
  * API Integration: Multiple endpoints for dashboard data
  */
 const DashboardPage: React.FC = () => {
@@ -20,6 +21,8 @@ const DashboardPage: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+  const [activeStateTab, setActiveStateTab] = useState("all-india");
   const [dashboardData, setDashboardData] = useState({
     neetStats: [],
     timeline: [],
@@ -58,6 +61,11 @@ const DashboardPage: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
   const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed);
+  const toggleRightSidebar = () => setIsRightSidebarOpen(!isRightSidebarOpen);
+  const handleStateSelect = (state: string) => {
+    // Handle state selection for data filtering
+    console.log("Selected state:", state);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-blue-50 to-indigo-50">
@@ -92,11 +100,18 @@ const DashboardPage: React.FC = () => {
           className="flex-1 flex flex-col min-h-screen"
           style={{
             marginLeft: isSidebarCollapsed ? "64px" : "256px",
-            marginRight: "320px",
+            marginRight: isRightSidebarOpen ? "320px" : "48px",
           }}
         >
+          {/* State Tabs */}
+          <StateTabs 
+            activeTab={activeStateTab} 
+            onTabChange={setActiveStateTab}
+            onStateSelect={handleStateSelect}
+          />
+          
           <MainContent 
-            activeTab="all-india" 
+            activeTab={activeStateTab} 
             dashboardData={dashboardData}
           />
         </div>
@@ -111,8 +126,12 @@ const DashboardPage: React.FC = () => {
         onToggleCollapse={toggleSidebar}
       />
 
-      {/* Choice Lists (Right sidebar) */}
-      <ChoiceLists choiceLists={dashboardData.choiceLists} />
+      {/* Right Sidebar */}
+      <RightSidebar
+        isOpen={isRightSidebarOpen}
+        onToggle={toggleRightSidebar}
+        choiceLists={dashboardData.choiceLists}
+      />
 
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav

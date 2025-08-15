@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 /**
- * Unified Header Component
+ * Enhanced Header Component for NEET PG Platform
  * Main navigation header with search, user menu, and mobile navigation
  * Integrated with React Router for navigation
  */
@@ -46,17 +46,16 @@ const Header: React.FC<HeaderProps> = ({
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  // NEET dropdown options with navigation
-  const neetOptions = [
-    { id: "neet-ug", label: "NEET UG", description: "Undergraduate Medical", path: "/neet-ug" },
+  // NEET PG dropdown options with navigation
+  const neetPGOptions = [
     { id: "neet-pg", label: "NEET PG", description: "Postgraduate Medical", path: "/neet-pg" },
-    { id: "inicet", label: "INICET", description: "Institute of National Importance", path: "/inicet" },
+    // { id: "inicet", label: "INICET", description: "Institute of National Importance", path: "/inicet" }, // Commented as requested
   ];
 
-  // Predictor dropdown options
+  // NEET PG Predictor dropdown options
   const predictorOptions = [
-    { id: "ug-predictor", label: "UG Predictor", description: "NEET UG College Predictor", path: "/predictor/ug" },
     { id: "pg-predictor", label: "PG Predictor", description: "NEET PG Specialty Predictor", path: "/predictor/pg" },
+    // { id: "ug-predictor", label: "UG Predictor", description: "NEET UG College Predictor", path: "/predictor/ug" }, // Commented for NEET PG focus
   ];
 
   return (
@@ -130,24 +129,24 @@ const Header: React.FC<HeaderProps> = ({
                   BD-Counsels
                 </h1>
                 <p className="text-xs text-slate-500">
-                  Medical Career Guidance
+                  NEET PG Career Guidance
                 </p>
               </div>
             </button>
 
             <div className="flex items-center space-x-6">
-              {/* NEET Dropdown */}
+              {/* NEET PG Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => toggleDropdown("neet")}
                   className="flex items-center space-x-2 px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
                 >
-                  <span>NEET</span>
+                  <span>NEET PG</span>
                   <ChevronDown className="w-4 h-4" />
                 </button>
                 {activeDropdown === "neet" && (
                   <div className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-xl rounded-xl shadow-xl border border-slate-200/50 py-2 z-50 animate-in slide-in-from-top-2">
-                    {neetOptions.map((option) => (
+                    {neetPGOptions.map((option) => (
                       <button
                         key={option.id}
                         onClick={() => {
@@ -174,7 +173,7 @@ const Header: React.FC<HeaderProps> = ({
                   onClick={() => toggleDropdown("predictor")}
                   className="flex items-center space-x-2 px-4 py-2 text-green-600 hover:bg-green-50 rounded-xl transition-all duration-200 font-medium"
                 >
-                  <span>Predictors</span>
+                  <span>PG Predictors</span>
                   <ChevronDown className="w-4 h-4" />
                 </button>
                 {activeDropdown === "predictor" && (
@@ -215,7 +214,7 @@ const Header: React.FC<HeaderProps> = ({
               <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search courses, colleges..."
+                placeholder="Search NEET PG courses, colleges..."
                 value={searchValue}
                 onChange={handleSearch}
                 className="pl-10 pr-4 py-2.5 w-64 lg:w-80 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-50/50 transition-all duration-200"
@@ -300,7 +299,7 @@ const Header: React.FC<HeaderProps> = ({
           <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Search courses, colleges..."
+            placeholder="Search NEET PG courses, colleges..."
             value={searchValue}
             onChange={handleSearch}
             className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-50/50 transition-all duration-200"

@@ -13,11 +13,15 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
+  Bell,
+  FileText,
+  Award,
+  Users,
 } from "lucide-react";
 
 /**
  * Right Sidebar Component
- * Contains Choice Lists and Latest News sections
+ * Contains Choice Lists and NEET PG 2025 Updates sections
  * Opens on hover/click with smooth animations
  */
 interface RightSidebarProps {
@@ -58,39 +62,79 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newListName, setNewListName] = useState("");
 
-  // Latest News/Updates data
-  const latestUpdates = [
+  // NEET PG 2025 Updates data based on the provided image
+  const neetPGUpdates = [
     {
       id: 1,
-      title: "NEET PG 2025 Results",
-      description: "Results declared! Check your scorecard now",
-      time: "2 hours ago",
-      type: "result",
+      title: "Registration",
+      description: "17 Apr 3:00 PM to 7 May, 2025 11:55 PM",
       status: "completed",
+      icon: CheckCircle,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
     },
     {
       id: 2,
-      title: "Round 3 Registration",
-      description: "Registration opens from Oct 8, 2024",
-      time: "5 hours ago",
-      type: "registration",
-      status: "upcoming",
+      title: "Resubmit exam centre choice",
+      description: "13 to 17 Jun, 2025",
+      status: "completed",
+      icon: CheckCircle,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
     },
     {
       id: 3,
-      title: "Seat Matrix 2025",
-      description: "Updated seat matrix available for download",
-      time: "1 day ago",
-      type: "update",
+      title: "Application edit window",
+      description: "20 to 22 Jun, 2025",
       status: "completed",
+      icon: CheckCircle,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
     },
     {
       id: 4,
-      title: "NEET PG Counselling Schedule",
-      description: "Complete timeline for NEET PG 2025 counselling",
-      time: "2 days ago",
-      type: "schedule",
-      status: "active",
+      title: "Informing exam city to candidates",
+      description: "21 Jul, 2025",
+      status: "completed",
+      icon: CheckCircle,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
+    },
+    {
+      id: 5,
+      title: "Issue of admit cards",
+      description: "31 Jul, 2025",
+      status: "completed",
+      icon: CheckCircle,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
+    },
+    {
+      id: 6,
+      title: "NEET PG 2025 Exam",
+      description: "03 Aug, 2025",
+      status: "completed",
+      icon: CheckCircle,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
+    },
+    {
+      id: 7,
+      title: "NEET PG 2025 Results",
+      description: "By 03 Sep, 2025",
+      status: "pending",
+      icon: Clock,
+      color: "text-gray-500",
+      bgColor: "bg-gray-100",
+    },
+    {
+      id: 8,
+      title: "Counselling",
+      description: "To be announced",
+      status: "pending",
+      icon: Clock,
+      color: "text-gray-500",
+      bgColor: "bg-gray-100",
     },
   ];
 
@@ -121,21 +165,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         return <TrendingUp className="w-4 h-4 text-blue-500" />;
       default:
         return <div className="w-4 h-4 rounded-full bg-gray-300"></div>;
-    }
-  };
-
-  const getUpdateIcon = (type: string) => {
-    switch (type) {
-      case "result":
-        return <CheckCircle className="w-5 h-5 text-green-500" />;
-      case "registration":
-        return <Calendar className="w-5 h-5 text-blue-500" />;
-      case "update":
-        return <AlertCircle className="w-5 h-5 text-orange-500" />;
-      case "schedule":
-        return <Clock className="w-5 h-5 text-purple-500" />;
-      default:
-        return <AlertCircle className="w-5 h-5 text-gray-500" />;
     }
   };
 
@@ -187,6 +216,51 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               >
                 <X className="w-5 h-5 text-slate-600" />
               </button>
+            </div>
+
+            {/* NEET PG 2025 Counselling Schedule Section */}
+            <div className="mb-8">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
+                  <Calendar className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-800">NEET PG 2025</h3>
+                  <p className="text-xs text-slate-500">Counselling Schedule</p>
+                </div>
+              </div>
+
+              <div className="space-y-3 max-h-80 overflow-y-auto">
+                {neetPGUpdates.map((update) => (
+                  <div
+                    key={update.id}
+                    className="p-4 bg-gradient-to-r from-slate-50 to-white rounded-xl border border-slate-200/50 hover:shadow-lg transition-all duration-300"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className={`w-10 h-10 ${update.bgColor} rounded-full flex items-center justify-center flex-shrink-0`}>
+                        <update.icon className={`w-5 h-5 ${update.color}`} />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate-800 text-sm mb-1">
+                          {update.title}
+                        </h4>
+                        <p className="text-xs text-slate-600 mb-2">
+                          {update.description}
+                        </p>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            update.status === "completed"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-gray-100 text-gray-700"
+                          }`}
+                        >
+                          {update.status === "completed" ? "Completed" : "Pending"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Choice Lists Section */}
@@ -281,58 +355,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   <span className="font-medium text-sm">Create New List</span>
                 </button>
               )}
-            </div>
-
-            {/* Latest News Section */}
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-400 rounded-lg flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800">Latest Updates</h3>
-                </div>
-                <button className="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 text-xs font-medium">
-                  View All
-                </button>
-              </div>
-
-              <div className="space-y-3 max-h-80 overflow-y-auto">
-                {latestUpdates.map((update) => (
-                  <div
-                    key={update.id}
-                    className="p-4 bg-gradient-to-r from-slate-50 to-white rounded-xl border border-slate-200/50 hover:shadow-lg transition-all duration-300"
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div className="flex-shrink-0 mt-1">
-                        {getUpdateIcon(update.type)}
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-slate-800 text-sm mb-1">
-                          {update.title}
-                        </h4>
-                        <p className="text-xs text-slate-600 mb-2">
-                          {update.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-slate-500">{update.time}</span>
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              update.status === "completed"
-                                ? "bg-green-100 text-green-700"
-                                : update.status === "upcoming"
-                                ? "bg-blue-100 text-blue-700"
-                                : "bg-orange-100 text-orange-700"
-                            }`}
-                          >
-                            {update.status}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         )}

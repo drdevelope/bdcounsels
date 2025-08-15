@@ -1,0 +1,21 @@
+Round,State_Rank,State,Institute,Course,Quota,Category,Fee,Stipend_Year_1,Bond_Years,Bond_Penalty,Beds
+1,12897,Delhi,Hindu Rao Hospital Delhi,MD General Medicine,All India,GEN,₹125000,₹121389,0,₹0,980
+1,14214,Jharkhand,Tata Main Hospital Jamshedpur,MD General Medicine,All India,GEN,₹125000,₹52000,0,₹0,915
+1,15997,Delhi,Sir Ganga Ram Hospital Delhi,MD General Medicine,All India,GEN,₹125000,₹83000,0,₹0,675
+1,16105,Delhi,Dr Baba Saheb Ambedkar Delhi,MD Obstetrics & Gynecology,All India,GEN,₹125000,₹110533,0,₹0,500
+1,19423,West Bengal,Apollo Gleneagles Kolkata,MD Radio Diagnosis,All India,GEN,-,-,-,-,750
+1,19880,Delhi,Hindu Rao Hospital Delhi,MD Obstetrics & Gynecology,All India,GEN,-,-,-,-,980
+1,20078,Delhi,Dr Baba Saheb Ambedkar Delhi,MD General Medicine,All India,GEN,₹125000,₹110533,0,₹0,500
+1,21334,Jharkhand,Tata Main Hospital Jamshedpur,MD Obstetrics & Gynecology,All India,GEN,-,-,-,-,915
+1,22791,Jharkhand,Bokaro General Hospital Bokaro,MD Obstetrics & Gynecology,All India,GEN,₹125000,₹56100,0,₹0,910
+1,23912,Delhi,Hindu Rao Hospital Delhi,MS General Surgery,All India,GEN,₹125000,₹121389,0,₹0,980
+2,15234,Maharashtra,KEM Hospital Mumbai,MD Pediatrics,State Quota,OBC,₹85000,₹95000,2,₹500000,1200
+2,18567,Karnataka,Bangalore Medical College,MS Orthopedics,State Quota,SC,₹45000,₹78000,3,₹750000,850
+2,22145,Tamil Nadu,Madras Medical College,MD Anesthesiology,State Quota,ST,₹35000,₹65000,1,₹300000,1500
+2,25678,Gujarat,BJ Medical College Ahmedabad,MD Radiology,State Quota,EWS,₹95000,₹88000,0,₹0,950
+2,28934,Rajasthan,SMS Medical College Jaipur,MD Pathology,State Quota,GEN,₹125000,₹92000,2,₹600000,1100
+3,32145,Punjab,Government Medical College Patiala,MD Psychiatry,State Quota,OBC,₹75000,₹85000,3,₹800000,750
+3,35678,Haryana,PGIMS Rohtak,MS ENT,State Quota,SC,₹65000,₹72000,2,₹450000,900
+3,38912,Uttar Pradesh,KGMU Lucknow,MD Dermatology,State Quota,ST,₹55000,₹68000,1,₹250000,1300
+3,42345,West Bengal,Medical College Kolkata,MD Ophthalmology,State Quota,GEN,₹115000,₹89000,2,₹550000,1800
+3,45678,Odisha,SCB Medical College Cuttack,MD Emergency Medicine,State Quota,EWS,₹85000,₹76000,0,₹0,800
